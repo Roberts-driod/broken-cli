@@ -1,13 +1,13 @@
 <?php
 
 $tasks = [
-    1 => ['status' => 'done', 'priority' => 2, 'content' => 'konsultācija 15:10'],
-    2 => ['status' => 'inprogress', 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00'],
-    3 => ['priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00'],
+     [  "id" => 1 , 'status' => 'done', 'priority' => 2, 'content' => 'konsultācija 15:10'],
+     [ "id" => 2 , 'status' => 'inprogress', 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00'],
+     [ "id" => 3 , 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00', 'status' => ""],
 ];
 
 function displayTask($task) {
-    echo "ID: {$task['id']}, CONTENT: {$task['content']}, STATUS: {$task['status']}\n";
+    echo "ID: {$task['id']}, CONTENT: {$task['content']}, {$task['status']}  \n";
 }
 
 function viewTask(&$tasks) {
@@ -103,7 +103,7 @@ do {
                 displayAllTasks($tasks);
                 break;
             case 6:
-                //
+                setStatus($tasks);
                 break;
             case 7:
                 echo "Uz redzēšanos!\n";
