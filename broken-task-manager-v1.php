@@ -20,7 +20,7 @@ function viewTask(&$tasks) {
 }
 
 function addTask(&$tasks) {
-    readline("Ievadiet jaunu uzdevumu: ");
+    $newContent = readline("Ievadiet jaunu uzdevumu: ");
     $tasks[] = [ 'status' => 'new', 'priority' => 5, 'content' => $newContent ];
     echo "Uzdevums pievienots\n";
 }
