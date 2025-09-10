@@ -25,24 +25,6 @@ if (file_exists($json_file)) {
     file_put_contents($json_file, json_encode($books, JSON_PRETTY_PRINT));
 }
 
-// $books = [
-//     1 => [
-//         'title' => 'The Great Gatsby',
-//         'author' => 'F. Scott Fitzgerald'
-//     ],
-//     2 => [
-//         'title' => '1984',
-//         'author' => 'George Orwell'
-//     ],
-//     3 => [
-//         'title' => 'Pride and Prejudice',
-//         'author' => 'Jane Austen'
-//     ]
-// ];
-
-
-// $json_books = json_encode($books, JSON_PRETTY_PRINT);
-// echo $json_books;
 
 function saveBooksToJson($books) {
     global $json_file;
@@ -80,6 +62,28 @@ function deleteBook(&$books) {
     }
 }
 
+function editBook(&$books) {
+    $id = readline("Enter book ID you want to edit: ");
+
+        if (isset($books[$id])) {
+        echo "Current details: \n";
+        displayBook($id, $books[$id]);
+
+        $field = readline("Which field do you want to edit? (title/author): ");
+
+        if ($field == "title" || $field == "author") {
+            $new_value = readline("Enter new " . $field . ": ");
+            $books[$id][$field] = $new_value; // Rediģē grāmatas lauku
+            saveBooksToJson($books); // Saglabā izmaiņas JSON failā
+            echo "Book updated successfully!\n";
+        } else {
+            echo "Invalid field selected. Only 'title' or 'author' can be edited.\n";
+        }
+    } else {
+        echo "Book with ID {$id} does not exist.\n";
+    }
+}
+
 
 function displayBook($id, $book) {
     echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. "\n\n";
@@ -94,6 +98,7 @@ do {
     echo "2 - show a book\n";
     echo "3 - add a book\n";
     echo "4 - delete a book\n";
+    echo "6 - EDIT a book\n";
     echo "5 - quit\n\n";
     $choice = readline();
 
@@ -110,12 +115,12 @@ do {
         case 4:
             deleteBook($books);
             break;
-        case 5:
+        case 6:
             echo "Goodbye!\n";
             $continue = false;
             break;
-        case 13:
-            print_r($books); // hidden option to see full $books content
+        case 5:
+            editBook($books);
             break;
         default:
             echo "Invalid choice\n";
