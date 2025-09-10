@@ -33,6 +33,7 @@ function deleteTask(&$tasks) {
     } else {
         echo "Uzdevums nav atrasts\n";
     }
+
 }
 
 function editTask(&$tasks) {
