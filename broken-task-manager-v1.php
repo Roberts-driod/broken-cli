@@ -26,7 +26,7 @@ function addTask(&$tasks) {
 }
 
 function deleteTask(&$tasks) {
-    $id = input("Ievadiet dzēšamā uzdevuma ID: ");
+    $id = readline("Ievadiet dzēšamā uzdevuma ID: ");
     if (isset($tasks[$id])) {
         unset($tasks);
         echo "Uzdevums dzēsts\n";
