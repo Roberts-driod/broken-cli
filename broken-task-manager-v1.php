@@ -1,9 +1,9 @@
 <?php
 
 $tasks = [
-     [  "id" => 1 , 'status' => 'done', 'priority' => 2, 'content' => 'konsultācija 15:10'],
-     [ "id" => 2 , 'status' => 'inprogress', 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00'],
-     [ "id" => 3 , 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00', 'status' => ""],
+    1=> [  "id" => 1 , 'status' => 'done', 'priority' => 2, 'content' => 'konsultācija 15:10'],
+    2=> [ "id" => 2 , 'status' => 'inprogress', 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00'],
+     3 =>  [ "id" => 3 , 'priority' => 5, 'content'=> 'aizbraukt uz veikalu 19:00', 'status' => ""],
 ];
 
 function displayTask($task) {
@@ -28,7 +28,7 @@ function addTask(&$tasks) {
 function deleteTask(&$tasks) {
     $id = readline("Ievadiet dzēšamā uzdevuma ID: ");
     if (isset($tasks[$id])) {
-        unset($tasks);
+        unset($tasks[$id]);
         echo "Uzdevums dzēsts\n";
     } else {
         echo "Uzdevums nav atrasts\n";

@@ -1,40 +1,85 @@
 <?php
 
-$books = [
-    1 => [
-        'title' => 'The Great Gatsby',
-        'author' => 'F. Scott Fitzgerald'
-    ],
-    2 => [
-        'title' => '1984',
-        'author' => 'George Orwell'
-    ],
-    3 => [
-        'title' => 'Pride and Prejudice',
-        'author' => 'Jane Austen'
-    ]
-];
+$json_file = 'data.json';
+
+
+if (file_exists($json_file)) {
+    $json_data = file_get_contents($json_file);
+    $books = json_decode($json_data, true); // Konvertē JSON uz asociatīvo masīvu
+} else {
+    $books = [
+        1 => [
+            'title' => 'The Great Gatsby',
+            'author' => 'F. Scott Fitzgerald'
+        ],
+        2 => [
+            'title' => '1984',
+            'author' => 'George Orwell'
+        ],
+        3 => [
+            'title' => 'Pride and Prejudice',
+            'author' => 'Jane Austen'
+        ]
+    ];
+    // Saglabā sākotnējo grāmatu sarakstu JSON failā
+    file_put_contents($json_file, json_encode($books, JSON_PRETTY_PRINT));
+}
+
+// $books = [
+//     1 => [
+//         'title' => 'The Great Gatsby',
+//         'author' => 'F. Scott Fitzgerald'
+//     ],
+//     2 => [
+//         'title' => '1984',
+//         'author' => 'George Orwell'
+//     ],
+//     3 => [
+//         'title' => 'Pride and Prejudice',
+//         'author' => 'Jane Austen'
+//     ]
+// ];
+
+
+// $json_books = json_encode($books, JSON_PRETTY_PRINT);
+// echo $json_books;
+
+function saveBooksToJson($books) {
+    global $json_file;
+    // Saglabā grāmatu datus JSON formātā
+    file_put_contents($json_file, json_encode($books, JSON_PRETTY_PRINT));
+}
 
 
 function showAllBooks($books) {
-    foreach ($books as $id => $book) {
-        // need to display each book here
+    foreach ($books as  $book) {
+        echo ("title: ".  $book["title"] . " author: " . $book["author"] . "\n");
     }
 }
 
-function showBook() {
+function showBook($books) {
     $id = readline("Enter book id: ");
     displayBook($id, $books[$id]);
 }
 
 function addBook(&$books) {
     $title = readline("Enter title: ");
-    $books[] = ['title' => $title, 'author' => $author];
+    $author = readline("Enter author: ");
+    $id = max(array_keys($books)) + 1;
+    $books[$id] = ['title' => $title, 'author' => $author];
+    saveBooksToJson($books); 
 }
 
 function deleteBook(&$books) {
     $id = readline("Enter book ID you want to delete: ");
+    if (isset($books[$id])) {
+        unset($books[$id]);
+        saveBooksToJson($books); // Saglabā izmaiņas JSON failā
+    } else {
+        echo "Book with ID {$id} does not exist.\n";
+    }
 }
+
 
 function displayBook($id, $book) {
     echo "ID: {$id} // Title: ". $book['title'] . " // Author: " . $book['author']. "\n\n";
