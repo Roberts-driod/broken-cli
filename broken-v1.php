@@ -35,7 +35,6 @@ function loadBooksFromCsv($csv_file) {
 function saveBooksToCsv($books, $csv_file) {
     $file = fopen($csv_file, 'w');
     foreach ($books as $id => $book) {
-        // Pievienots escape parametrs
         fputcsv($file, [$id, $book['title'], $book['author']], ',', '\\');
     }
     fclose($file);
@@ -112,41 +111,37 @@ function displayBook($id, $book) {
     echo "ID: {$id} // Title: " . $book['title'] . " // Author: " . $book['author'] . "\n\n";
 }
 
+// Galvenā izvēlne, kuru lietotājs izvēlas vienreiz
 echo "\n\nWelcome to the Library\n";
-$continue = true;
-do {
-    echo "\n\n";
-    echo "2 - show all books\n";
-    echo "7 - show a book\n";
-    echo "3 - add a book\n";
-    echo "8 - delete a book\n";
-    echo "5 - edit a book\n";
-    echo "6 - quit\n\n";
-    $choice = readline();
+echo "2 - show all books\n";
+echo "7 - show a book\n";
+echo "3 - add a book\n";
+echo "8 - delete a book\n";
+echo "5 - edit a book\n";
+echo "6 - quit\n\n";
+$choice = readline();
 
-    switch ($choice) {
-        case 7:
-            showAllBooks($books);
-            break;
-        case 3:
-            showBook($books);
-            break;
-        case 2:
-            addBook($books);
-            break;
-        case 4:
-            deleteBook($books);
-            break;
-        case 6:
-            editBook($books);
-            break;
-        case 5:
-            echo "Goodbye!\n";
-            $continue = false;
-            break;
-        default:
-            echo "Invalid choice\n";
-    }
+switch ($choice) {
+    case 7:
+        showAllBooks($books);
+        break;
+    case 3:
+        showBook($books);
+        break;
+    case 2:
+        addBook($books);
+        break;
+    case 4:
+        deleteBook($books);
+        break;
+    case 5:
+        editBook($books);
+        break;
+    case 6:
+        echo "Goodbye!\n";
+        break;
+    default:
+        echo "Invalid choice\n";
+}
 
-} while ($continue);
 ?>
